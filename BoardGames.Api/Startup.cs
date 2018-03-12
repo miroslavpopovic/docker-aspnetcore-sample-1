@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Text;
+using BoardGames.Api.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BoardGames.Api
 {
@@ -25,6 +22,23 @@ namespace BoardGames.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IGamesRepository, GamesRepository>();
+
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(
+                    options =>
+                    {
+                        var tokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidIssuer = Configuration["Tokens:Issuer"],
+                            ValidAudience = Configuration["Tokens:Issuer"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                        };
+
+                        options.TokenValidationParameters = tokenValidationParameters;
+                    });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -40,7 +54,12 @@ namespace BoardGames.Api
                 app.UseHsts();
             }
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             app.UseHttpsRedirection();
+
+            app.UseAuthentication();
+
             app.UseMvc();
         }
     }
