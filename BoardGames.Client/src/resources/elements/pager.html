@@ -1,0 +1,27 @@
+<template>
+
+  <div class="row">
+    <div class="col-sm text-center">
+
+      <nav>
+        <ul class="pagination justify-content-center">
+          <li class="page-item ${page === 1 ? 'disabled' : ''}">
+            <a href="#" class="page-link" aria-label="Previous" click.delegate="goToPreviousPage()">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item ${p === page ? 'active' : ''}" repeat.for="p of pages">
+            <a href="#" class="page-link" click.delegate="goToPage(p)">${p}</a>
+          </li>
+          <li class="page-item ${page === totalPages ? 'disabled' : ''}">
+            <a href="#" class="page-link" aria-label="Next" click.delegate="goToNextPage()">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+
+</template>

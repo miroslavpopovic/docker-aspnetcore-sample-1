@@ -39,6 +39,8 @@ namespace BoardGames.Api
                         options.TokenValidationParameters = tokenValidationParameters;
                     });
 
+            services.AddCors();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -54,11 +56,25 @@ namespace BoardGames.Api
                 app.UseHsts();
             }
 
+            app.UseStaticFiles();
+
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors(builder => builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowAnyOrigin());
+            }
+            else
+            {
+                // TODO: Define staging / production values for CORS
+            }
 
             app.UseMvc();
         }

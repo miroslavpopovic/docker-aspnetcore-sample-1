@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title><%- htmlWebpackPlugin.options.metadata.title %></title>
+    <base href="<%- htmlWebpackPlugin.options.metadata.baseUrl %>">
+
+    <!-- imported CSS are concatenated and added automatically -->
+  </head>
+  <body>
+    <div aurelia-app="main">
+      <% if (htmlWebpackPlugin.options.metadata.server) { %>
+      <!-- Webpack Dev Server reload -->
+      <script src="/webpack-dev-server.js"></script>
+      <% } %>
+      </div>
+  </body>
+</html>

@@ -61,7 +61,7 @@ namespace BoardGames.Api.Data
             if (_games == null)
             {
                 var assembly = typeof(GamesRepository).Assembly;
-                var resourceStream = assembly.GetManifestResourceStream("BoardGamesApi.Data.games.json");
+                var resourceStream = assembly.GetManifestResourceStream("BoardGames.Api.Data.games.json");
 
                 using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
                 using (var jsonReader = new JsonTextReader(reader))

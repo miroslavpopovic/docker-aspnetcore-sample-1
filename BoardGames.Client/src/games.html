@@ -1,0 +1,20 @@
+<template>
+
+    <div class="card-deck games">
+        <div class="card game" repeat.for="game of games">
+            <img class="card-img-top" src="${imageRoot}${game.image}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">${game.title}</h5>
+                <p class="card-text">
+                    Year: ${game.year}
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+
+        
+    </div>
+
+  <pager page.bind="page" total-pages.bind="totalPages" change.trigger="getPage($event.detail.page)" if.bind="totalPages > 1"></pager>
+
+</template>

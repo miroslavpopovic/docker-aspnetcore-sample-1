@@ -1,0 +1,15 @@
+.page-header h1 {
+    margin-bottom: 4rem;
+    margin-top: 1rem;
+}
+
+.games .game {
+    margin-bottom: 2rem;
+    min-width: 14rem;
+
+    img {
+        max-height: 14rem;
+        object-fit: cover;
+        object-position: center;
+    }
+}
