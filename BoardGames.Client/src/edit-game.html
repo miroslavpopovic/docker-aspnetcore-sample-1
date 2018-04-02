@@ -1,3 +1,64 @@
 <template>
-    edit
+    <h2>${heading}</h2>
+
+    <form>
+
+        <div class="form-group">
+            <label>Title</label>
+            <input type="text" class="form-control" placeholder="Game title" value.bind="game.title">
+        </div>
+
+        <div class="form-group">
+            <label>Year</label>
+            <input type="numeric" class="form-control" placeholder="Year manufactured" value.bind="game.year">
+        </div>
+
+        <div class="form-group">
+            <label>Rating</label>
+            <input type="numeric" class="form-control" placeholder="BoardGameGeek rating" value.bind="game.rating">
+        </div>
+
+        <div class="form-group">
+            <label>Age</label>
+            <input type="text" class="form-control" placeholder="Recommended player's age" value.bind="game.age">
+        </div>
+
+        <div class="form-group">
+            <label>Players</label>
+            <input type="text" class="form-control" placeholder="Number of players" value.bind="game.players">
+        </div>
+
+        <div class="form-group">
+            <label>Playing time</label>
+            <input type="text" class="form-control" placeholder="Game playing time" value.bind="game.playingTime">
+        </div>
+
+        <div class="form-group">
+            <label>Designer</label>
+            <input type="text" class="form-control" placeholder="Game designer" value.bind="game.designer">
+        </div>
+
+        <div class="form-group">
+            <label>Publisher</label>
+            <input type="text" class="form-control" placeholder="Game publisher" value.bind="game.publisher">
+        </div>
+
+        <div class="form-group">
+            <label>BGG URL</label>
+            <input type="text" class="form-control" placeholder="BoardGameGeek URL" value.bind="game.url">
+        </div>
+
+        <div class="form-group">
+            <label>Image name</label>
+            <input type="text" class="form-control" placeholder="Game cover image name with extension" value.bind="game.image">
+        </div>
+
+        <div class="form-group">
+            <label>Types (comma separated)</label>
+            <input type="text" class="form-control" placeholder="Game types" value.bind="game.types">
+        </div>
+
+        <button class="btn btn-primary" click.trigger="save()">Save</button>
+        <a route-href="route: games" class="btn btn-default">Cancel</a>
+    </form>
 </template>

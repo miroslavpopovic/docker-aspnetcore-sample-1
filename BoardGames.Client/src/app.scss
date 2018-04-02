@@ -3,6 +3,10 @@
     margin-top: 1rem;
 }
 
+.toolbar {
+    margin-bottom: 2rem;
+}
+
 .games .game {
     margin-bottom: 2rem;
     min-width: 14rem;
@@ -12,4 +16,16 @@
         object-fit: cover;
         object-position: center;
     }
+
+    .meta {
+        font-size: 0.85rem;
+    }
+
+    .badge {
+        margin-right: 0.5rem;
+    }
+}
+
+footer {
+    margin-bottom: 2rem;
 }

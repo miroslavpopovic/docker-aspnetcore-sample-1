@@ -17,6 +17,13 @@ export class Games {
         await this.getPage(this.page);
     }
 
+    async deleteGame(game) {
+        await this.api.delete(game.id);
+
+        this.page = 1;
+        await this.getPage(this.page);
+    }
+
     async getPage(page) {
         let response = await this.api.getPage(page, this.pageSize);
 

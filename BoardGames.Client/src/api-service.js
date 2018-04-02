@@ -37,7 +37,7 @@ export class ApiService {
     async save(game) {
         const method = game.id ? 'PUT' : 'POST';
 
-        const response = await this.http.fetch(`games`, {
+        const response = await this.http.fetch(`games${game.id ? '/' + game.id : ''}`, {
             method: method,
             body: json(game)
         });

@@ -1,19 +1,24 @@
 <template>
-  <require from="bootstrap/dist/css/bootstrap.min.css"></require>
-  <require from="./app.scss"></require>
+    <require from="bootstrap/dist/css/bootstrap.min.css"></require>
+    <require from="./app.scss"></require>
 
-  <div class="container">
-    <div class="row page-header">
-      <div class="col sm">
-        <h1>Board games collection</h1>        
-      </div>
+    <div class="container">
+        <div class="row page-header">
+            <div class="col sm">
+                <h1>Board games collection</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <router-view></router-view>
+            </div>
+        </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm">
-          <router-view></router-view>
-      </div>
-    </div>
-  </div>
+    <hr>
 
+    <footer class="text-center small">
+        built by <a href="https://miroslavpopovic.com">Miroslav Popovic</a>; images are from <a href="https://boardgamegeek.com">BoardGameGeek</a>
+    </footer>
 </template>

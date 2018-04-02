@@ -1,14 +1,22 @@
 <template>
 
+    <div class="text-right toolbar">
+        <a route-href="route: add-game" class="btn btn-lg btn-primary">Add new game</a>        
+    </div>
+
     <div class="card-deck games">
         <div class="card game" repeat.for="game of games">
             <img class="card-img-top" src="${imageRoot}${game.image}" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">${game.title}</h5>
-                <p class="card-text">
-                    Year: ${game.year}
+                <p class="card-text meta">
+                    Rating: ${game.rating}<br/>
+                    Designer: ${game.designer}<br/>
+                    Year: ${game.year}<br/>
+                    <span class="badge badge-secondary" repeat.for="type of game.types">${type}</span>
                 </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <a route-href="route: edit-game; params.bind: { id: game.id }" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger" click.delegate="deleteGame(game)">Delete</a>
             </div>
         </div>
 
