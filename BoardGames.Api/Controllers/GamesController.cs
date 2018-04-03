@@ -3,36 +3,37 @@ using BoardGames.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BoardGames.Api.Controllers
 {
     [Authorize]
+    [ApiController]
     [Route("api/[controller]")]
     public class GamesController : Controller
     {
-        private readonly IGamesRepository _gamesRepository;
+        private readonly GamesDbContext _dbContext;
         private readonly ILogger<GamesController> _logger;
 
-        public GamesController(IGamesRepository gamesRepository, ILogger<GamesController> logger)
+        public GamesController(GamesDbContext dbContext, ILogger<GamesController> logger)
         {
-            _gamesRepository = gamesRepository;
+            _dbContext = dbContext;
             _logger = logger;
         }
         
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             _logger.LogDebug($"Deleting game with id {id}");
 
-            if (string.IsNullOrWhiteSpace(id))
-                return NotFound();
-
-            var game = _gamesRepository.GetById(id);
+            var game = await _dbContext.Games.FindAsync(id);
             if (game == null)
                 return NotFound();
 
-            _gamesRepository.Delete(id);
+            _dbContext.Games.Remove(game);
+            await _dbContext.SaveChangesAsync();
 
             return Ok();
         }
@@ -42,20 +43,24 @@ namespace BoardGames.Api.Controllers
         {
             _logger.LogDebug("Getting one page of games");
 
-            var games = _gamesRepository.GetPage(page, size);
-
+            var count = _dbContext.Games.Count();
+            var games = new PagedList<Game>
+            {
+                Items = _dbContext.Games.Skip((page - 1) * size).Take(size).ToArray(),
+                Page = page,
+                PageSize = size,
+                TotalCount = count
+            };
+            
             return Ok(games);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public IActionResult GetById(int id)
         {
             _logger.LogDebug($"Getting a game with id {id}");
 
-            if (string.IsNullOrWhiteSpace(id))
-                return NotFound();
-
-            var game = _gamesRepository.GetById(id);
+            var game = _dbContext.Games.Find(id);
 
             if (game == null)
                 return NotFound();
@@ -65,40 +70,33 @@ namespace BoardGames.Api.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult Post([FromBody] GameInput model)
+        public async Task<IActionResult> Post(GameInput model)
         {
             _logger.LogDebug($"Creating a new game with title \"{model.Title}\"");
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
 
             var game = new Game();
             model.MapToGame(game);
 
-            _gamesRepository.Create(game);
+            await _dbContext.Games.AddAsync(game);
+            await _dbContext.SaveChangesAsync();
 
-            var url = $"{Request.Scheme}://{Request.Host}/api/games/{game.Id}";
-
-            return Created(url, game);
+            return CreatedAtAction("GetById", new { id = game.Id });
         }
 
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] GameInput model)
+        public async Task<IActionResult> Put(int id, GameInput model)
         {
             _logger.LogDebug($"Updating a game with id {id}");
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var game = _gamesRepository.GetById(id);
+            var game = await _dbContext.Games.FindAsync(id);
 
             if (game == null)
                 return NotFound();
 
             model.MapToGame(game);
 
-            _gamesRepository.Update(game);
+            await _dbContext.SaveChangesAsync();
 
             return Ok(game);
         }

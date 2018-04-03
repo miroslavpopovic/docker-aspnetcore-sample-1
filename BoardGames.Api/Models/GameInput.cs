@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BoardGames.Api.Models
 {
@@ -23,7 +22,7 @@ namespace BoardGames.Api.Models
         [Required]
         public string Image { get; set; }
 
-        public IEnumerable<string> Types { get; set; }
+        public string Types { get; set; }
 
         public void MapToGame(Game game)
         {

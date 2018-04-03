@@ -27,6 +27,10 @@ export class Games {
     async getPage(page) {
         let response = await this.api.getPage(page, this.pageSize);
 
+        response.items.forEach(game => {
+            game.types = game.types ? game.types.split(',') : [];
+        });
+
         this.games = response.items;
         this.totalCount = response.totalCount;
         this.totalPages = response.totalPages;
