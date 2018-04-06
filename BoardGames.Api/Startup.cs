@@ -53,14 +53,14 @@ namespace BoardGames.Api
             }
             else
             {
-                app.UseHsts();
+                //app.UseHsts();
             }
 
             app.UseStaticFiles();
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthentication();
 

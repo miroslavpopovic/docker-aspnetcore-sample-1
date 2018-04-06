@@ -2,6 +2,25 @@ version: '3.4'
 
 services:
 
+    reverse-proxy:
+        build:
+            context: ./BoardGames.Proxy
+        ports:
+            - "5110:80"
+            - "5111:5001"
+        networks:
+            - overlay
+        depends_on:
+            - frontend
+
+    frontend:
+        build:
+            context: ./BoardGames.Client
+        networks:
+            - overlay
+        depends_on:
+            - backend
+
     backend:
         build:
             context: ./BoardGames.Api
