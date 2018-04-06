@@ -1,8 +1,23 @@
 version: '3.4'
 
 services:
-  boardgames.api:
-    image: ${DOCKER_REGISTRY}boardgamesapi
-    build:
-      context: .
-      dockerfile: BoardGames.Api/Dockerfile
+
+    backend:
+        build:
+            context: ./BoardGames.Api
+        networks:
+            - overlay
+        depends_on:
+            - postgres-db     
+
+    postgres-db:
+        image: postgres
+        networks:
+            - overlay
+        environment:
+            POSTGRES_USER: "board_games_user"
+            POSTGRES_PASSWORD: "board_games_pass"
+            POSTGRES_DB: "board_games"
+
+networks:
+    overlay:

@@ -15,7 +15,7 @@ namespace BoardGames.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            
             modelBuilder.AddDefaultNotNullableConvention();
 
             modelBuilder.AddPostgreSqlConventions();

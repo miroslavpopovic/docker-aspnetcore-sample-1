@@ -1,4 +1,5 @@
 ﻿using BoardGames.Api.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +9,8 @@ namespace BoardGames.Api.Data
     {
         public static void SeedGames(GamesDbContext dbContext)
         {
+            dbContext.Database.Migrate();
+
             if (dbContext.Games.Any())
             {
                 return;
