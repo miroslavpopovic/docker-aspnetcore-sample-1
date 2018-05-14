@@ -17,6 +17,12 @@ Following with:
 
     docker-compose up
 
+> **Note**
+>
+> If you get 401 errors in dev console when application is open in browser (http://localhost:5110) you need to set new API access tokens in `/BoardGames.Client/aurelia_project/environments/*.js` files. To get new API token open this URL in browser http://localhost:5110/get-token?admin=true.
+>
+> After the token is updated, repeat the process of building and starting the docker compose services.
+
 ## Download
 
 - [MS Network 2018 presentation](msnetwork-2018-docker-and-aspnet-core.pptx)
